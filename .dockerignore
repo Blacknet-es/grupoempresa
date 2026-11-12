@@ -1,0 +1,14 @@
+.git
+.github
+**/.env
+**/.env.*
+!**/.env.dist
+!**/.env.docker.example
+**/vendor/
+**/node_modules/
+**/bower_components/
+**/var/cache/*
+**/var/log/*
+**/*.sql
+**/*.gz
+**/.DS_Store
