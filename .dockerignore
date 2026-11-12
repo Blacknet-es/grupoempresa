@@ -15,4 +15,5 @@ grupoempresa/public/webfonts/
 **/var/log/*
 **/*.sql
 **/*.gz
+/dbbackup/
 **/.DS_Store

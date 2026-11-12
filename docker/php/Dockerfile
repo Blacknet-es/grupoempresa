@@ -6,6 +6,7 @@ RUN apk add --no-cache \
         libjpeg-turbo \
         libpng \
         libzip \
+        mariadb-client \
         oniguruma \
         git \
         unzip \
@@ -23,6 +24,10 @@ RUN apk add --no-cache \
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 COPY docker/php/dev-pool.conf /usr/local/etc/php-fpm.d/www.conf
+COPY docker/dbbackup/import.php /usr/local/bin/import-database-backup.php
+COPY docker/dev/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 WORKDIR /var/www/html
 COPY grupoempresa/ ./
@@ -64,4 +69,5 @@ COPY --from=assets /var/www/html/public/ /var/www/html/public/
 RUN mkdir -p var/cache var/log public/uploads/files documents \
     && chown -R www-data:www-data var public/uploads documents
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["php-fpm", "-F"]

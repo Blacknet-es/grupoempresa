@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./grupoempresa:/var/www/html:delegated
+      - ./dbbackup:/dbbackup:ro
       - vendor_data:/var/www/html/vendor
       - var_data:/var/www/html/var
       - uploads_data:/var/www/html/public/uploads
@@ -20,6 +21,8 @@ services:
       APP_ENV: ${APP_ENV:-dev}
       APP_SECRET: ${APP_SECRET:-docker-dev-secret-change-me}
       DATABASE_URL: ${DATABASE_URL:-mysql://symfony_user:symfony_pass@db:3306/symfony_db?serverVersion=mariadb-10.5.0}
+      DB_BACKUP_PATH: ${DB_BACKUP_PATH:-/dbbackup/backup.sql}
+      DB_BACKUP_IMPORT_ALLOW_NONEMPTY: ${DB_BACKUP_IMPORT_ALLOW_NONEMPTY:-0}
     depends_on:
       db:
         condition: service_healthy
@@ -56,7 +59,6 @@ services:
       - "127.0.0.1:3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ${DB_DUMP_PATH:-/dev/null}:/docker-entrypoint-initdb.d/dump.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping --protocol=tcp -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
       interval: 10s
