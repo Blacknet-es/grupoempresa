@@ -7,6 +7,10 @@
 **/vendor/
 **/node_modules/
 **/bower_components/
+grupoempresa/public/css/
+grupoempresa/public/js/
+grupoempresa/public/fonts/
+grupoempresa/public/webfonts/
 **/var/cache/*
 **/var/log/*
 **/*.sql

@@ -1,64 +1,49 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var util = require('gulp-util');
 var minifyCSS = require('gulp-csso');
-var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 
 
 var adminJS = [
-    './public/bundles/trendixadmin/vendors/sparklines/jquery.sparkline.min.js',
-    './public/bundles/trendixadmin/vendors/bootstrap-growl/bootstrap-growl.min.js',
-    './public/bundles/trendixadmin/vendors/summernote/dist/summernote-updated.min.js',
-    './public/bundles/trendixadmin/js/charts.js',
-    './public/bundles/trendixadmin/js/functions.js',
-    './public/bundles/trendixadmin/js/paginator.js',
+    './public/bundles/trendixadmin/js/conditional_fields.js',
+    './public/bundles/trendixadmin/js/formUtils.js',
+    './public/bundles/trendixadmin/js/inc/actions.js',
+    './public/bundles/trendixadmin/js/inc/paginator.js',
+    './public/bundles/trendixadmin/js/utils.js',
     './public/bundles/trendixadmin/pickadate/lib/picker.js',
     './public/bundles/trendixadmin/pickadate/lib/picker.date.js',
     './public/bundles/trendixadmin/pickadate/lib/picker.time.js',
-    './public/bundles/trendixadmin/js/datepicker.js',
-    './public/bundles/trendixadmin/js/jscolor.min.js',
-    './public/bundles/trendixadmin/js/image_uploader.js',
-    './public/bundles/trendixadmin/js/conditional_fields.js',
-    './public/bundles/trendixadmin/js/actions.js',
     './public/bundles/trendixadmin/jcrop/js/jquery.color.js',
     './public/bundles/trendixadmin/jcrop/js/jquery.fileupload.js',
     './public/bundles/trendixadmin/jcrop/js/jquery.Jcrop.min.js',
-    './public/bundles/trendixadmin/jcrop/js/imageWidget.js',
-    './public/bundles/trendixadmin/js/utils.js',
-    './public/bundles/trendixadmin/js/formUtils.js'
+    './public/bundles/trendixadmin/jcrop/js/imageWidget.js'
 ];
 
 var bowerDependencies = [
     './bower_components/flot/jquery.flot.js',
     './bower_components/flot/jquery.flot.resize.js',
-    './bower_components/flot.curvedLines/curvedLines.js',
+    './bower_components/flot.curvedlines/curvedLines.js',
     './bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js',
     './bower_components/moment/min/moment.min.js',
     './bower_components/fullcalendar/dist/fullcalendar.min.js',
-    './bower_components/simpleWeather/jquery.simpleWeather.min.js',
-    './bower_components/Waves/dist/waves.min.js',
-    './bower_components/bootstrap-sweetalert/lib/sweet-alert.min.js',
-    './bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
+    './bower_components/sweetalert2/dist/sweetalert2.all.min.js',
+    './bower_components/jquery.scrollbar/jquery.scrollbar.min.js',
     './bower_components/autosize/dist/autosize.min.js',
 ];
 
 var appJS = [
-    './bower_components/jquery/dist/jquery.js',
-    './public/bootstrap/dist/js/bootstrap.js',
+    './bower_components/jquery/dist/jquery.min.js',
+    './bower_components/bootstrap/dist/js/bootstrap.min.js',
     './bower_components/popper.js/dist/umd/popper.min.js',
     './bower_components/inputmask/dist/min/jquery.inputmask.bundle.min.js',
-    './public/bootstrap/dist/js/bootstrap.js',
     './bower_components/pickadate/lib/picker.js',
     './bower_components/pickadate/lib/picker.date.js',
     './bower_components/pickadate/lib/translations/es_ES.js',
-    './bower_components/scrollreveal/dist/scrollreveal.js',
-    './src/Resources/public/js/paralax.js',
-    './src/Resources/public/js/scroll.js'
+    './bower_components/scrollreveal/dist/scrollreveal.js'
 ];
 
 var headerAppJS = [
-    './bower_components/font-awesome/svg-with-js/js/fontawesome-all.js'
+    './bower_components/font-awesome/js/all.min.js'
 ];
 
 var headerJS = [];
@@ -70,63 +55,68 @@ var frontSass = [
     './public/scss/front.scss'
 ];
 
+function waitForStream(stream) {
+    return new Promise(function(resolve, reject) {
+        stream.once('error', reject);
+        stream.once('finish', resolve);
+    });
+}
+
 function compileSass() {
-    gulp.src([
-        './public/bundles/*/**/app.scss'
-    ])
-        .pipe(sass().on('error', util.log))
-        .pipe(concat('app.css'))
-        .pipe(minifyCSS())
-        .pipe(gulp.dest('./public/css'));
-    gulp.src([
-        './public/bundles/trendixadmin/fonts/*',
-        './public/bundles/trendixadmin/fonts/**/*'
-    ])
-        .pipe(gulp.dest('./public/fonts'));
+    return Promise.all([
+        waitForStream(gulp.src('./public/bundles/*/**/app.scss')
+            .pipe(sass())
+            .pipe(concat('app.css'))
+            .pipe(minifyCSS())
+            .pipe(gulp.dest('./public/css'))),
+        waitForStream(gulp.src([
+            './public/bundles/trendixadmin/fonts/*',
+            './public/bundles/trendixadmin/fonts/**/*'
+        ]).pipe(gulp.dest('./public/fonts')))
+    ]);
 }
 
 function compileFrontSass() {
-    gulp.src(frontSass)
-        .pipe(sass().on('error', util.log))
-        .pipe(concat('front.css'))
-        .pipe(minifyCSS())
-        .pipe(gulp.dest('./public/css'));
+    return Promise.all([
+        waitForStream(gulp.src(frontSass)
+            .pipe(sass())
+            .pipe(concat('front.css'))
+            .pipe(minifyCSS())
+            .pipe(gulp.dest('./public/css'))),
+        waitForStream(gulp.src('./bower_components/font-awesome/webfonts/**/*')
+            .pipe(gulp.dest('./public/webfonts')))
+    ]);
 }
 
 gulp.task('sass', function() {
-    compileSass();
-    //compileFrontSass();
+    return Promise.all([compileSass(), compileFrontSass()]);
 });
 
 function compileJS() {
-    gulp.src(headerJS.concat([
+    return Promise.all([
+        waitForStream(gulp.src(headerJS.concat([
         './bower_components/popper.js/dist/umd/popper.min.js',
-        './bower_components/jquery/dist/jquery.js',
-        './bower_components/bootstrap/dist/js/bootstrap.js'
-    ]))
-        .pipe(concat('header.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./public/js'));
+        './bower_components/jquery/dist/jquery.min.js',
+        './bower_components/bootstrap/dist/js/bootstrap.min.js'
+        ]))
+            .pipe(concat('header.js'))
+            .pipe(gulp.dest('./public/js'))),
 
-    gulp.src(headerAppJS)
-        .pipe(concat('header-app.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./public/js'));
+        waitForStream(gulp.src(headerAppJS)
+            .pipe(concat('header-app.js'))
+            .pipe(gulp.dest('./public/js'))),
 
-    gulp.src(bowerDependencies.concat(adminJS))
-        .pipe(concat('footer.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./public/js'));
+        waitForStream(gulp.src(bowerDependencies.concat(adminJS))
+            .pipe(concat('footer.js'))
+            .pipe(gulp.dest('./public/js'))),
 
-    if(appJS.length) {
-        gulp.src(appJS)
+        waitForStream(gulp.src(appJS)
             .pipe(concat('app.js'))
-            .pipe(uglify())
-            .pipe(gulp.dest('./public/js'));
-    }
+            .pipe(gulp.dest('./public/js')))
+    ]);
 }
 gulp.task('js', function() {
-    compileJS();
+    return compileJS();
 });
 
 gulp.task('watch', function () {
