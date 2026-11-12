@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      target: development
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: "1"
+    # Local files persist in the project tree; do not shadow the live bind with production data volumes.
+    volumes: !override
+      - ./grupoempresa:/var/www/html
+      - ./dbbackup:/dbbackup:ro
+
+  web:
+    ports:
+      - "80:80"
+    volumes: !override
+      - ./grupoempresa:/var/www/html:ro
+
+  db:
+    ports:
+      - "127.0.0.1:3306:3306"
