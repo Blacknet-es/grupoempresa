@@ -76,7 +76,6 @@ COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/99-opcache.ini
 COPY docker/prod/php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 COPY docker/prod/default.conf /etc/nginx/http.d/default.conf
 COPY docker/prod/entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY docker/dbbackup/import.php /usr/local/bin/import-database-backup.php
 
 RUN chmod +x /usr/local/bin/entrypoint.sh \
     && mkdir -p /run/nginx \

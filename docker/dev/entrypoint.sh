@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
 
-php /usr/local/bin/import-database-backup.php
+cd /var/www/html
+php bin/console app:database-backup:import --no-interaction
 exec "$@"

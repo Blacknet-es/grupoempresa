@@ -24,7 +24,6 @@ RUN apk add --no-cache \
 
 COPY --from=composer:2.2 /usr/bin/composer /usr/bin/composer
 COPY docker/php/dev-pool.conf /usr/local/etc/php-fpm.d/www.conf
-COPY docker/dbbackup/import.php /usr/local/bin/import-database-backup.php
 COPY docker/dev/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/entrypoint.sh
