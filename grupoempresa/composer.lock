@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f74e7c9cfe7c450bce660daf6dde9d9a",
+    "content-hash": "5b5fa1c1c6ab2be895069c3dd06c104e",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -8687,8 +8687,8 @@
             "version": "v4.x-dev",
             "source": {
                 "type": "git",
-                "url": "https://bitbucket.org/trendixteam/adminbundle.git",
-                "reference": "93568babdce90627a6360f3bff5883c75df0137a"
+                "url": "https://github.com/Blacknet-es/adminbundle.git",
+                "reference": "520d70d357b59af2e8e3fc5a9e3ada8c21c9484e"
             },
             "require": {
                 "beberlei/doctrineextensions": "1.0.21",
@@ -8709,7 +8709,7 @@
                 "proprietary"
             ],
             "description": "Admin template, users and base functionalities for Symfony 4",
-            "time": "2021-09-14T10:25:29+00:00"
+            "time": "2026-11-12T15:36:37+00:00"
         },
         {
             "name": "twig/extensions",
@@ -9123,5 +9123,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }
