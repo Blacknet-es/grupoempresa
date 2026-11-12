@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<title>File index</title>
+
+{% block body %}
+    <h1>File index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Url</th>
+                <th>Token</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for file in files %}
+            <tr>
+                <td>{{ file.id }}</td>
+                <td>{{ file.nombre }}</td>
+                <td>{{ file.url }}</td>
+                <td>{{ file.token }}</td>
+                <td>
+                    <a href="{{ path('file_show', {'id': file.id}) }}">show</a>
+                    <a href="{{ path('file_edit', {'id': file.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('file_new') }}">Create new</a>
+{% endblock %}

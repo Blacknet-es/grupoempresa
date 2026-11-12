@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit MetodoPago</title>
+
+{% block body %}
+    <h1>Edit MetodoPago</h1>
+
+    {{ include('metodo_pago/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('metodo_pago_index') }}">back to list</a>
+
+    {{ include('metodo_pago/_delete_form.html.twig') }}
+{% endblock %}

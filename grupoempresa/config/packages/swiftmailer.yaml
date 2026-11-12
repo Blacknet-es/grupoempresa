@@ -1,0 +1,7 @@
+swiftmailer:
+    url: '%env(MAILER_URL)%'
+    spool: { type: 'memory' }
+    transport: 'smtp'
+    host: 'mail.trendix.es'
+    username: 'planea@trendix.es'
+    password: 'wSJ81!z5'

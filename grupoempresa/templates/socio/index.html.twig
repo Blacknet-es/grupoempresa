@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<title>Socio index</title>
+
+{% block body %}
+    <h1>Socio index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Fecha_alta</th>
+                <th>Fecha_baja</th>
+                <th>Fecha_nacimiento</th>
+                <th>Domicilio</th>
+                <th>Ciudad</th>
+                <th>Codigo_postal</th>
+                <th>Provincia</th>
+                <th>Telefonos</th>
+                <th>Email</th>
+                <th>Activo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for socio in socios %}
+            <tr>
+                <td>{{ socio.id }}</td>
+                <td>{{ socio.nombre }}</td>
+                <td>{{ socio.apellidos }}</td>
+                <td>{{ socio.fechaAlta ? socio.fechaAlta|date('Y-m-d') : '' }}</td>
+                <td>{{ socio.fechaBaja ? socio.fechaBaja|date('Y-m-d') : '' }}</td>
+                <td>{{ socio.fechaNacimiento ? socio.fechaNacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ socio.domicilio }}</td>
+                <td>{{ socio.ciudad }}</td>
+                <td>{{ socio.codigoPostal }}</td>
+                <td>{{ socio.provincia }}</td>
+                <td>{{ socio.telefonos ? socio.telefonos|join(', ') : '' }}</td>
+                <td>{{ socio.email }}</td>
+                <td>{{ socio.activo ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('socio_show', {'id': socio.id}) }}">show</a>
+                    <a href="{{ path('socio_edit', {'id': socio.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('socio_new') }}">Create new</a>
+{% endblock %}

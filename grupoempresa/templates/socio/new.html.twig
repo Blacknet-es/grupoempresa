@@ -1,0 +1,27 @@
+{% extends 'TrendixAdminBundle::layout.html.twig' %}
+{% import 'TrendixAdminBundle::btnMacros.html.twig' as buttons %}
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="card-title">
+                    {% if socio.id is not null %}
+                        <h2>Editar Socio</h2>
+                    {% else %}
+                        <h2>Nuevo Socio</h2>
+                    {% endif %}
+                </div>
+                {% if error is defined %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block actionButtons %}
+    {{ buttons.actionButton('javascript:$("form").submit()', 'floppy', 'green', 'Guardar')  }}
+{% endblock %}

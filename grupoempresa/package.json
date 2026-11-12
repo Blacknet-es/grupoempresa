@@ -1,0 +1,29 @@
+{
+  "name": "Trendix-Base-Repository",
+  "version": "1.1.0",
+  "description": "Proyecto Base Para la Web de Trendix =========",
+  "main": "web/app.php",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-csso": "^3.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-util": "^3.0.8",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
+    "gulp-uglify": "~2.1.2",
+    "gulp-concat": "~2.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://JesusTrendix@bitbucket.org/trendixteam/trendixweb.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/trendixteam/trendixweb#readme"
+}

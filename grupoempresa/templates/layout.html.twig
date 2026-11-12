@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Calcula tu hipoteca de forma rÃ¡pida y sencilla">
+    <meta name="author" content="Hipotekko.com - Trendix.es">
+    <link rel="icon" href="favicon.ico">
+
+    <title>{% block title %}{{ app_name|trans|default("") }}{% endblock %}</title>
+    <!-- Global site tag (gtag.js) - Google Ads: 757836863 --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-757836863"></script><script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-757836863'); </script>
+
+    <!-- Bootstrap core CSS -->
+    {% block css %}
+        <!-- Vendor styles -->
+        <link href="https://fonts.googleapis.com/css?family=Sulphur+Point&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/front.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    {% endblock %}
+    {% if inmobiliaria is defined and inmobiliaria and inmobiliaria.alturaLogo %}
+        <style>
+            @media(min-width: 768px) {
+                img.header-logo {
+                    max-height: {{ inmobiliaria.alturaLogo }}px !important;
+                }
+
+                .show-logo a, .show-logo h3 {
+                    line-height: {{ inmobiliaria.alturaLogo }}px !important;
+                }
+            }
+        </style>
+    {% endif %}
+</head>
+
+<body class="text-center" {% block body_styles %}style="overflow-y: hidden;"{% endblock %}>
+<div class="loading d-flex">
+    <h3 class="loadingTitle justify-content-center align-self-center mx-auto">Fakturea</h3>
+</div>
+<div class="d-flex h-100 mx-auto flex-column">
+    <header class="container mb-auto py-3" style="background-color: #fff; z-index: 100;">
+        <div class="inner">
+
+            <h3 class="masthead-brand">{{ app_name|trans }}</h3>
+            <nav class="nav nav-masthead justify-content-center d-none d-md-flex">
+
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer class="py-3" style="background: white; z-index: 100; overflow-x: hidden;">
+        <div class="inner d-none d-md-block">
+            <div class="row">
+                <div class="col-6">Powered by <a href="https://trendix.es/">Trendix</a></div>
+                <div class="col-6">
+                    {#
+                    <a href="{{ path('aviso_legal') }}">Aviso Legal</a> |
+                    <a href="{{ path('politica_privacidad') }}">PolÃ­tica de Privacidad</a> |
+                    <a href="{{ path('politica_cookies') }}">Politica de Cookies</a>
+                    #}
+                </div>
+            </div>
+        </div>
+        <div class="container d-block d-md-none">
+            <div class="row">
+                {#
+                    <div class="col-4">
+                        <a href="{{ path('home') }}"><i class="fas fa-2x fa-home"></i></a>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ path('como_funciona') }}"><i class="fas fa-2x fa-info-circle"></i></a>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{ path('contacto') }}"><i class="fas fa-2x fa-envelope"></i></a>
+                    </div>
+                #}
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="/js/header-app.js"></script>
+<script src="/js/app.js"></script>
+<script>
+    $(window).on('load', function () {
+        setTimeout(function() {
+            $('.loading').fadeOut(400, function() {
+                $(this).remove();
+                $('.cookies').fadeIn(300);
+            });
+        }, 400);
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+    window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+            "position": "bottom",
+            "palette": {
+                "popup": {
+                    "background": "#00aecb"
+                },
+                "button": {
+                    "background": "#022a3a"
+                }
+            },
+            "content": {
+                "message": "En este sitio utilizamos cookies propias y de terceros para mejorar nuestros servicios y por motivos funcionales y estadÃ­sticos. Si continÃºa navegando consideramos que acepta su uso.",
+                "dismiss": "Aceptar",
+                "link": "Ver más",
+                "href": "#"
+            }
+        })});
+</script>
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>
+

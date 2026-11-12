@@ -1,0 +1,45 @@
+{% extends 'TrendixAdminBundle::layout.html.twig' %}
+{% import 'TrendixAdminBundle::btnMacros.html.twig' as buttons %}
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="card-title">
+                    <h2>Socio nº {{ socio.numSocio }}</h2>
+                </div>
+                <dl class="row">
+                    <dt class="col-4">Nombre Completo</dt>
+                    <dd class="col-8">{{ socio.nombre }} {{ socio.apellidos }}</dd>
+
+                    <dt class="col-4">DNI</dt>
+                    <dd class="col-8">{{ socio.dni }}</dd>
+
+
+                    <dt class="col-4">Dirección</dt>
+                    <dd class="col-8">{{ socio.domicilio }}, {{ socio.codigoPostal }}, {{ socio.ciudad }} ({{ socio.provincia }})</dd>
+
+
+                    <dt class="col-4">Fecha Nacimiento</dt>
+                    <dd class="col-8">{{ socio.fechaNacimiento.format('d-m-Y')|default('--') }}</dd>
+
+
+                    <dt class="col-4">Fecha Alta</dt>
+                    <dd class="col-8">{{ socio.fechaAlta.format('d-m-Y')|default('--') }}</dd>
+
+
+                    <dt class="col-4">Fecha Baja</dt>
+                    <dd class="col-8">{{ socio.fechaBaja.format('d-m-Y')|default('--') }}</dd>
+
+
+                    <dt class="col-4">Método de Pago</dt>
+                    <dd class="col-8">{{ socio.metodoPago }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block actionButtons %}
+    {{ buttons.actionButton(path('socio_edit', {id: socio.id}), 'edit', 'green', 'Editar')  }}
+{% endblock %}

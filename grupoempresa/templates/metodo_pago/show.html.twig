@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<title>MetodoPago</title>
+
+{% block body %}
+    <h1>MetodoPago</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ metodo_pago.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ metodo_pago.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Clave</th>
+                <td>{{ metodo_pago.clave }}</td>
+            </tr>
+            <tr>
+                <th>Periodo</th>
+                <td>{{ metodo_pago.periodo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('metodo_pago_index') }}">back to list</a>
+
+    <a href="{{ path('metodo_pago_edit', {'id': metodo_pago.id}) }}">edit</a>
+
+    {{ include('metodo_pago/_delete_form.html.twig') }}
+{% endblock %}

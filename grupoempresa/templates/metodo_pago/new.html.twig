@@ -1,0 +1,25 @@
+{% extends 'TrendixAdminBundle::layout.html.twig' %}
+{% import 'TrendixAdminBundle::btnMacros.html.twig' as buttons %}
+{% block content %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body card-padding">
+                <div class="card-title">
+                    {% if metodo_pago.id is not null %}
+                        <h2>Editar Método de Pago</h2>
+                    {% else %}
+                        <h2>Nuevo Método de Pago</h2>
+                    {% endif %}
+                </div>
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block actionButtons %}
+    {{ buttons.actionButton('javascript:$("form").submit()', 'floppy', 'green', 'Guardar')  }}
+{% endblock %}
+

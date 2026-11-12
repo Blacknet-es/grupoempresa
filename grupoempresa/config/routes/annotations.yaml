@@ -1,0 +1,6 @@
+controllers:
+    resource: ../../src/Controller/
+    type: annotation
+
+tendix_admin_bundle:
+    resource: "@TrendixAdminBundle/Resources/config/routing.yml"

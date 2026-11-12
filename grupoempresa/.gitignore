@@ -1,0 +1,20 @@
+
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+/.idea/
+/bower_components/
+/node_modules/
+###> gulp assets ###
+/public/css/
+/public/js/
+/public/fonts/
+###< gulp assets ###
+/public/uploads/
+!/public/uploads/.gitkeep
+/documents/
+!/documents/.gitkeep
+/public/bootstrap/build/gcp-key.json.enc
