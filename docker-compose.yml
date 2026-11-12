@@ -1,0 +1,66 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: grupoempresa_app
+    restart: unless-stopped
+    volumes:
+      - ./grupoempresa:/var/www/html:delegated
+      - vendor_data:/var/www/html/vendor
+      - var_data:/var/www/html/var
+      - uploads_data:/var/www/html/public/uploads
+      - documents_data:/var/www/html/documents
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+      APP_SECRET: ${APP_SECRET:-docker-dev-secret-change-me}
+      DATABASE_URL: ${DATABASE_URL:-mysql://symfony_user:symfony_pass@db:3306/symfony_db?serverVersion=mariadb-10.5.0}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: nginx:alpine
+    container_name: grupoempresa_web
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./grupoempresa:/var/www/html:ro
+      - uploads_data:/var/www/html/public/uploads:ro
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+
+  db:
+    image: mariadb:10.5
+    container_name: grupoempresa_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-symfony_db}
+      MYSQL_USER: ${MYSQL_USER:-symfony_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-symfony_pass}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ${DB_DUMP_PATH:-/dev/null}:/docker-entrypoint-initdb.d/dump.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping --protocol=tcp -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  db_data:
+    driver: local
+  vendor_data:
+    driver: local
+  var_data:
+    driver: local
+  uploads_data:
+    driver: local
+  documents_data:
+    driver: local
